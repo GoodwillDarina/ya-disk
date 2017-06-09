@@ -9,7 +9,7 @@ let requestHeaders = Config.headers;
 
 export const initApp = () => {
   return dispatch => {
-    return fetch(`${apiUrl}`, {headers: requestHeaders})
+    return fetch(`${apiUrl}/resources?path=/`, {headers: requestHeaders, })
       .then((response) => {
         if (response.status >= 400) {
           throw new Error("Bad response from server");
@@ -17,9 +17,9 @@ export const initApp = () => {
         return response.json();
       })
       .then((response) => {
-        console.log(response);
+        console.log(response._embedded.items);
 
-        dispatch({type: Action.INIT_APP, folders: response.system_folders});
+        dispatch({type: Action.INIT_APP, folders: response._embedded.items});
       })
   }
 }
