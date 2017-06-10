@@ -7,19 +7,19 @@ import { Config } from '../config';
 let apiUrl = Config.url;
 let requestHeaders = Config.headers;
 
-export const initApp = () => {
-  return dispatch => {
-    return fetch(`${apiUrl}/resources?path=/`, {headers: requestHeaders, })
+export const getData = (path) => {
+  return (dispatch) => {
+    // dispatch({type: Action.GET_DATA});
+    return fetch(`${apiUrl}/resources?path=${path}`, {headers: requestHeaders, })
       .then((response) => {
         if (response.status >= 400) {
-          throw new Error("Bad response from server");
+          dispatch({type: Action.GET_DATA_FAIL, message: 'Bad response from server'});
+          throw new Error('Bad response from server');
         }
         return response.json();
       })
       .then((response) => {
-        console.log(response._embedded.items);
-
-        dispatch({type: Action.INIT_APP, folders: response._embedded.items});
+        dispatch({type: Action.GET_DATA_SUCCESS, folders: response._embedded.items});
       })
   }
 }

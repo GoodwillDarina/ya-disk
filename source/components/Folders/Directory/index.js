@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Folder from 'material-ui/svg-icons/file/folder';
 
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   b: {
     display: 'block',
-    fontSize: '18px',
+    fontSize: '15px',
     lineHeight: 1.5,
     textDecoration: 'none',
     color: '#404040'
@@ -25,14 +26,14 @@ export const styles = StyleSheet.create({
 });
 export default class Directory extends Component {
   render() {
-    const { data } = this.props;
+    const { data, change } = this.props;
     let path = data.path.substring(data.path.indexOf("/"));
 
     return (
-      <a className={ css(styles.dirElement) } href={ path }>
+      <Link className={ css(styles.dirElement) } to={ path }  onClick={ this.handleClick } >
         <Folder className={ css(styles.icon) } color={ '#6f6b6c' }/>
         <b className={ css(styles.b) }>{ data.name }</b>
-      </a>
+      </Link>
     )
   }
 }

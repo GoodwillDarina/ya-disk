@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -16,22 +18,30 @@ class App extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.foldersActions.initApp();
-  }
+  getData = (path) => {
+    this.props.foldersActions.getData(path);
+  };
 
   render() {
     const { folders } = this.props;
     const { initApp } = this.props.foldersActions;
 
-    return <MuiThemeProvider >
-      <div className="page-content">
-        <AppBar title="My Disk" showMenuIconButton={ false }/>
-        {
-          folders.resources ? <Folders data={ folders.resources }/> : <CircularProgress />
-        }
-      </div>
-    </MuiThemeProvider>
+    const WrappedFolders = (props) => {
+      return <Folders { ...props } data={ folders.resources } getData={ ::this.getData }/>;
+    };
+    console.log(this);
+    return (
+      <MuiThemeProvider >
+        <div>
+          <AppBar title="My Disk" showMenuIconButton={ false }/>
+          <div className="page-content"> 
+            <Router>
+              <Folders data={ folders.resources } getData={ ::this.getData }/>
+            </Router >
+          </div>
+        </div>
+      </MuiThemeProvider>
+    )
   }
 }
 

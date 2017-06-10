@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   b: {
     display: 'block',
-    fontSize: '18px',
+    fontSize: '15px',
     lineHeight: 1.5,
     color: '#404040'
   },

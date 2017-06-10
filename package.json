@@ -12,6 +12,7 @@
   },
   "author": "Saburova Daria",
   "devDependencies": {
+    "aphrodite": "^1.2.1",
     "autoprefixer-loader": "*",
     "babel": "^6.5.2",
     "babel-core": "*",
@@ -27,6 +28,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "react-hot-loader": "^1.3.0",
+    "react-router-dom": "^4.1.1",
     "redux-logger": "^2.8.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
