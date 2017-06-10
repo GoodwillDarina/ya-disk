@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
 export default class File extends Component {
   render() {
     const { data } = this.props;
-    let size = data.size/(Math.pow(2, 23)); //конвертация размера в мегабайты (с учетом того, что приходящее значение указано в битах)
+    let size = data.size/(Math.pow(2, 20)); //конвертация размера в мегабайты (с учетом того, что приходящее значение указано в битах)
     return (
       <div className={ css(styles.fileElement) }>
         <InsertDriveFile className={ css(styles.icon) } color={ '#6f6b6c' } />
