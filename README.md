@@ -1,7 +1,5 @@
 # Ya.Disk
 
-=======================
-
 Commands (Client)
 --------
 * `npm start` - start webpack development server with hot reload and dev-tools (for Windows) 
