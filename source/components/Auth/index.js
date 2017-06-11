@@ -35,7 +35,10 @@ export default class Auth extends Component {
 
   componentWillMount() {
     if (this.props.location.hash) {
-      this.props.auth(/access_token=([^&]+)/.exec(this.props.location.hash)[1]);
+      let token = /access_token=([^&]+)/.exec(this.props.location.hash)[1];
+      location.hash = '';
+
+      this.props.auth(token);
     }
   }
 

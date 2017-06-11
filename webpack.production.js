@@ -9,7 +9,7 @@ module.exports = {
     './source/index.js'
   ],
   output: {
-    path: __dirname + '/public/',
+    path: __dirname + '/build/public/',
     publicPath: '/public/',
     filename: 'index.js'
   },

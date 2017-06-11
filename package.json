@@ -5,9 +5,9 @@
   "scripts": {
     "start": "set DEBUG=true && node server.js",
     "start:unix": "DEBUG=true node server.js",
-    "build": "webpack -p --config webpack.production.js",
-    "clean": "rm -rf public/* bundle.tar.gz",
-    "tar": "tar -czf bundle.tar.gz index.html public",
+    "build": "webpack -p --config webpack.production.js &&  cp index.html ./build",
+    "clean": "rm -rf build/* bundle.tar.gz",
+    "tar": "tar -czf bundle.tar.gz build",
     "package": "npm run clean && npm run build && npm run tar"
   },
   "author": "Saburova Daria",
