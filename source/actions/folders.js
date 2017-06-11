@@ -4,16 +4,39 @@ import fetch from 'isomorphic-fetch';
 import * as Action from '../constants/actions';
 import { Config } from '../config';
 
-let apiUrl = Config.url;
 let requestHeaders = Config.headers;
+
+export const authToken = (token) => {
+  return (dispatch) => {
+    localStorage.setItem('token', token);
+
+    dispatch({type: Action.AUTH, bool: true})
+  }
+}
+
+export const closeAlert = (token) => {
+  return {
+    type: Action.CLOSE_ALERT, 
+    message: false
+  }
+}
 
 export const getData = (path) => {
   return (dispatch) => {
-    // dispatch({type: Action.GET_DATA});
-    return fetch(`${apiUrl}/resources?path=${path}`, {headers: requestHeaders, })
+
+    requestHeaders['Authorization'] = 'OAuth ' + localStorage.getItem('token');
+
+    dispatch({type: Action.GET_DATA});
+    return fetch(`${Config.disk.url}/resources?path=${path}`, {headers: requestHeaders})
       .then((response) => {
         if (response.status >= 400) {
-          dispatch({type: Action.GET_DATA_FAIL, message: 'Bad response from server'});
+          let error =  `Error ${response.status}: ${response.statusText.toLowerCase()}`
+          if (response.status == 404) {
+            dispatch({type: Action.GET_DATA_FAIL, message: `${error} ${path}`});
+          } else if (response.status == 401) {
+            localStorage.removeItem('token');
+            dispatch({type: Action.AUTH, bool: false});
+          }
           throw new Error('Bad response from server');
         }
         return response.json();

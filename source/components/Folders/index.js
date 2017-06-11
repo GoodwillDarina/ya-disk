@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Link} from 'react-router-dom';
-import CircularProgress from 'material-ui/CircularProgress';
+import { Route } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
-import Directory from './Directory';
-import File from './File';
+import CircularProgress from 'material-ui/CircularProgress';
+import Directory from '../Directory';
+import File from '../File';
 
 export default class Folders extends Component {
   constructor(props) {
@@ -41,16 +41,22 @@ export default class Folders extends Component {
         <CircularProgress className="loader" size={ 80 } thickness={ 5 } /> 
       :      
         <div>
-          <GridList cellHeight={ 100 } cols={ 5 }>
-              {
-                data.map((element, index) => {
-                  return <GridTile key={ index }>
-                    { this.typeElements(element.type) ? <Directory data={ element }/> : <File data={ element } /> }
-                  </GridTile>
-                })
-              }
-          </GridList>
-          <Route path={`${location.pathname}/:id`} component={Folders}/>
+          { data.length == 0 ? 
+              <div className="empty">This is empty :(</div>
+            :
+              <div>
+                <GridList cellHeight={ 100 } cols={ 5 }>
+                    {
+                      data.map((element, index) => {
+                        return <GridTile key={ index }>
+                          { this.typeElements(element.type) ? <Directory data={ element }/> : <File data={ element } /> }
+                        </GridTile>
+                      })
+                    }
+                </GridList>
+                <Route path={`${location.pathname}/:id`} component={Folders}/>
+              </div>
+          }
         </div>
     )
   }

@@ -1,8 +1,12 @@
 export const Config = {
   'headers': {
     'Accept': 'application/json',
-    'Content-Type': 'application/json; charset=utf-8',
-    'Authorization': 'OAuth \AQAAAAAOQAXjAADLW-ZV9no0RU_ikEEgwvqs0mY'
+    'Content-Type': 'application/json; charset=utf-8'
   },
-  'url': 'https://cloud-api.yandex.net/v1/disk'
+  'disk': {
+  	'url': 'https://cloud-api.yandex.net/v1/disk'	
+  },
+  auth: {
+  	'url': 'https://oauth.yandex.ru/authorize?response_type=token&client_id=fb0d590a814a48ed838e52c470185b6c'
+  }
 }

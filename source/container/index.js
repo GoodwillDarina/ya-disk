@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import AppBar from 'material-ui/AppBar';
 import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 import Folders from '../components/Folders';
+import Auth from '../components/Auth';
 import * as foldersActions from '../actions/folders';
 
 import './styles.less';
@@ -24,21 +28,34 @@ class App extends Component {
 
   render() {
     const { folders } = this.props;
-    const { initApp } = this.props.foldersActions;
+    const { authToken, closeAlert } = this.props.foldersActions;
 
-    const WrappedFolders = (props) => {
-      return <Folders { ...props } data={ folders.resources } getData={ ::this.getData }/>;
+    const AuthWrapper = (props) => {
+      return <Auth { ...props } auth={ authToken } />
     };
-    console.log(this);
+    const actions = [ <FlatButton label='Хорошо' secondary={ true } onTouchTap={ closeAlert } /> ];
+
     return (
       <MuiThemeProvider >
         <div>
-          <AppBar title="My Disk" showMenuIconButton={ false }/>
-          <div className="page-content"> 
-            <Router>
-              <Folders data={ folders.resources } getData={ ::this.getData }/>
-            </Router >
-          </div>
+          <AppBar title='Ya.Disk' showMenuIconButton={ false }/>
+          <Router>
+            <div className='page-content'> 
+                { folders.isAuth ? 
+                  <div>
+                    <Folders data={ folders.resources } getData={ ::this.getData } /> 
+                  </div>
+                :  
+                  <div>
+                    <Route path='/' component={ AuthWrapper } /> 
+                  </div>
+                }
+            </div>
+          </Router >
+
+          <Dialog actions={ actions } modal={ false } open={ folders.message ? true : false } onRequestClose={ closeAlert } >
+            { folders.message }
+          </Dialog>
         </div>
       </MuiThemeProvider>
     )
