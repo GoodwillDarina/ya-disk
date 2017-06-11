@@ -9,4 +9,4 @@ Commands (Client)
 * `npm run package` - builds project for production and creates tarball ready for deployment to webserver root
 
 
-**Note:** For to start the project, run the `npm start` command and open `http://localhost:9900/` in the browser
+**Note:** For to start the project, run the `npm start` command or your local server (folder `build`) and open `http://localhost:9900/` in the browser
